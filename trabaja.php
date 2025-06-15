@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="./imagenes/icon.png" type="image/png">
+  <title>V y S Proyecto - Trabaja con nosotros</title>
+
+  <style>
+    /* Estilos generales (copiados de index.php para mantener la consistencia) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+    }
+
+    .navbar {
+      background: linear-gradient(90deg, #007bff, #00c6ff);
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .navbar .brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background: white;
+      margin: 4px 0;
+      border-radius: 2px;
+    }
+
+    /* Estilos específicos para la página Trabaja con nosotros */
+    .hero-section {
+      text-align: center;
+      padding: 3rem 1rem;
+      background-color: #f0f0f0;
+      box-shadow: inset 0 -5px 10px rgba(0,0,0,0.05);
+    }
+
+    .hero-section h1 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .hero-section p {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    /* Estilos para el select del filtro de cargos */
+    .filter-container {
+      text-align: center;
+      padding: 1rem;
+      background-color: #f0f2f5;
+    }
+
+    .filter-container select {
+      padding: 0.8rem 1rem;
+      width: 80%;
+      max-width: 500px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      transition: border-color 0.3s ease;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .filter-container select:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .job-listings {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+/** Estilos para las tarjetas de trabajo */
+/* Estilos para las tarjetas de trabajo */
+    .job-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; /* Alinea los elementos al inicio (arriba) */
+      align-items: center; /* Centra horizontalmente el contenido de cada tarjeta */
+      text-align: center; /* Centra las líneas de texto dentro de h2 y p */
+    }
+
+    .job-card h2 {
+      font-size: 1.8rem;
+      color: #007bff;
+      margin-bottom: 1rem; /* Mantiene un espacio consistente debajo del título */
+      /* NO NECESITA text-align aquí, lo hereda del padre o lo centra align-items */
+    }
+
+    .job-card p {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.6;
+      /* Ya no necesita margin-top: auto; */
+    }
+
+    .apply-section {
+        background-color: #f0f0f0;
+        padding: 3rem 1rem;
+        text-align: center;
+        box-shadow: inset 0 5px 10px rgba(0,0,0,0.05);
+        margin-top: 3rem; /* Espacio antes del footer */
+    }
+
+    .apply-section h2 {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .apply-form {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 2rem;
+        margin: 2rem auto;
+        max-width: 600px;
+        text-align: left;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: #555;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="file"],
+    .form-group select {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+        box-sizing: border-box; /* Incluye padding y border en el ancho total */
+    }
+
+    .form-group input[type="checkbox"] {
+        margin-right: 0.5rem;
+    }
+
+    .form-group button {
+        background-color: #007bff;
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%; /* Ocupa todo el ancho */
+        max-width: 200px; /* Ancho máximo para el botón */
+        display: block; /* Para centrar con margin auto */
+        margin: 1.5rem auto 0 auto; /* Centra el botón */
+    }
+
+    .form-group button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Estilos del footer (copiados de index.php para mantener la consistencia) */
+    .footer {
+      background-color: #e0e0e0;
+      color: #333;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-top: 3rem;
+      border-top: 1px solid #ccc;
+    }
+
+    .footer-column {
+      flex: 1;
+      min-width: 200px;
+      max-width: 300px;
+    }
+
+    .footer-column h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #007bff;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-column ul li a {
+      color: #555;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-column ul li a:hover {
+      color: #007bff;
+      text-decoration: underline;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-icons a {
+      color: #333;
+      font-size: 1.8rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: #007bff;
+    }
+
+    /* Ajuste específico para el icono de 'X' (Twitter) */
+    .social-icons a.fa-x-twitter {
+      font-size: 1.6rem;
+    }
+
+    /* Solución para asegurar que los íconos de Font Awesome se muestren */
+    .social-icons a i.fab {
+      font-family: "Font Awesome 6 Brands" !important;
+      font-weight: 400 !important;
+      display: inline-block !important;
+    }
+
+    .social-icons a i.fas {
+      font-family: "Font Awesome 6 Free" !important;
+      font-weight: 900 !important;
+      display: inline-block !important;
+    }
+
+    /* Media Queries para responsividad */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #007bff;
+        flex-direction: column;
+        align-items: center;
+        display: none;
+        z-index: 1000;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+
+      .hero-section p {
+        font-size: 1rem;
+      }
+
+      .filter-container select {
+        width: 90%;
+      }
+
+      .job-listings {
+        grid-template-columns: 1fr; /* Una columna en móviles */
+        padding: 1rem;
+      }
+
+      .footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer-column {
+        min-width: unset;
+        width: 100%;
+        max-width: unset;
+      }
+
+      .social-icons {
+        justify-content: center;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="brand">
+    <img src="./imagenes/icon.png" alt="Logo" height="40" style="vertical-align: middle; margin-right: 10px;">
+    V y S Proyecto
+  </div>
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="index.php">¿Quiénes somos?</a>
+    <a href="servicios.php">Servicios ofrecidos</a>
+    <a href="proyectos.php">Proyectos realizados</a>
+  </div>
+</nav>
+
+<section class="hero-section">
+  <h1>Trabaja con nosotros</h1>
+  <p>¿Te gustaría formar parte de nuestro equipo en V y S Proyecto? ¡Estamos buscando talento!</p>
+</section>
+
+<div class="filter-container">
+    <label for="jobSelector" class="sr-only">Filtrar por cargo:</label>
+    <select id="jobSelector" onchange="scrollToJob()">
+        <option value="">Selecciona un cargo disponible...</option>
+        <option value="maestro-carpintero">Maestro Carpintero</option>
+        <option value="encargado-obra">Encargado de Obra</option>
+        <option value="gasfiter">Gasfíter</option>
+        <option value="soldador">Soldador</option>
+        </select>
+</div>
+
+<section class="job-listings" id="jobListings">
+    <div id="maestro-carpintero" class="job-card">
+        <h2>Maestro Carpintero</h2>
+        <p>Es el responsable de ejecutar trabajos de instalación, reparación y acabado de revestimientos en muros, cielos y fachadas tanto en edificaciones residenciales como comerciales. Incluye el manejo de herramientas manuales y eléctricas, lectura de planos, y trabajo con diversos materiales como madera, fibrocemento y paneles decorativos. Además, asegura que los acabados cumplen con los estándares de calidad y seguridad establecidos por la empresa y el cliente.</p>
+    </div>
+
+    <div id="encargado-obra" class="job-card">
+        <h2>Encargado de Obra</h2>
+        <p>Supervisa el desarrollo de los trabajos en terreno, gestionando el personal técnico y velando por el cumplimiento de los plazos, normativas y estándares de calidad. Coordina la logística de los revestimientos (interiores y exteriores), asegurando la correcta ejecución según especificaciones técnicas.</p>
+    </div>
+
+    <div id="gasfiter" class="job-card">
+        <h2>Gasfíter</h2>
+        <p>El gasfíter se encarga de instalar, mantener y reparar sistemas de agua potable, alcantarillado y desagüe en edificaciones públicas y privadas. Realiza conexiones de tuberías, prueba de cañerías, y sistemas de evacuación de aguas servidas, cumpliendo con todas las normativas sanitarias y de seguridad. También identifica y soluciona filtraciones, obstrucciones o fallas en las instalaciones, trabajando de forma coordinada con otros oficios durante las obras.</p>
+    </div>
+
+    <div id="soldador" class="job-card">
+        <h2>Soldador</h2>
+        <p>El soldador es responsable de realizar uniones metálicas mediante técnicas de soldadura al arco, MIG, TIG o cualquier, según los requerimientos del proyecto. Participa en la fabricación, montaje y reparación de estructuras metálicas, marcos, pasamanos, rejas y otros elementos utilizados en revestimientos, techumbres u obras complementarias. Garantiza la resistencia y durabilidad de las uniones, cumpliendo con los planos técnicos y las normas de prevención de riesgos.</p>
+    </div>
+</section>
+
+<section class="apply-section" id="formulario-cv">
+    <h2>¿Te interesa trabajar con nosotros?</h2>
+    <p>¡Déjanos tus datos aquí para contactarte si requerimos de tus servicios!</p>
+
+    <div class="apply-form">
+        <form action="#" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="cargoInteres">Cargo de Interés:</label>
+                <select id="cargoInteres" name="cargoInteres">
+                    <option value="">Selecciona un cargo</option>
+                    <option value="maestro-carpintero">Maestro Carpintero</option>
+                    <option value="encargado-obra">Encargado de Obra</option>
+                    <option value="gasfiter">Gasfíter</option>
+                    <option value="soldador">Soldador</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cvFile">Adjuntar CV (PDF, DOCX):</label>
+                <input type="file" id="cvFile" name="cvFile" accept=".pdf,.doc,.docx" required>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" id="acceptTerms" name="acceptTerms" required>
+                <label for="acceptTerms">Acepto compartir mi información con V y S Proyecto</label>
+            </div>
+            <div class="form-group">
+                <button type="submit">Enviar CV</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+<footer class="footer">
+  <div class="footer-column">
+    <div class="social-icons">
+      <a href="https://www.facebook.com/TU_FACEBOOK" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/TU_INSTAGRAM" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.youtube.com/TU_YOUTUBE" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="https://www.linkedin.com/company/TU_LINKEDIN" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://x.com/TU_X_TWITTER" target="_blank" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+    </div>
+  </div>
+
+  <div class="footer-column">
+    <h3>¿Quiénes somos?</h3>
+    <ul>
+      <li><a href="index.php#misión">Misión</a></li>
+      <li><a href="index.php#visión">Visión</a></li>
+      </ul>
+  </div>
+
+  <div class="footer-column">
+    <h3>Servicios ofrecidos</h3>
+    <ul>
+      <li><a href="servicios.php#revestimiento-interior">Revestimiento interior</a></li>
+      <li><a href="servicios.php#revestimiento-exterior">Revestimiento exterior</a></li>
+      <li><a href="servicios.php#acondicionamiento-interior">Acondicionamiento interior</a></li>
+      </ul>
+  </div>
+
+  <div class="footer-column">
+      <h3>Proyectos realizados</h3>
+      <ul>
+        <li><a href="proyectos.php#hospital-pitrufquen">Hospital de Pitrufquén</a></li>
+        <li><a href="proyectos.php#municipalidad-pitrufquen">Municipalidad de Pitrufquén</a></li>
+        <li><a href="proyectos.php#hospital-carahue">Hospital de Carahue</a></li>
+        <li><a href="proyectos.php#hospital-tolten">Hospital de Toltén</a></li>
+        <li><a href="proyectos.php#municipalidad-temuco">Municipalidad de Temuco</a></li>
+        <li><a href="proyectos.php#municipalidad-padre-las-casas">Municipalidad de Padre Las Casas</a></li>
+        <li><a href="proyectos.php#hospital-loncoche">Hospital de Loncoche</a></li>
+        <li><a href="proyectos.php#junaeb-pitrufquen">JUNAEB (Pitrufquén)</a></li>
+        <li><a href="proyectos.php#ejercito-chile">Ejército de Chile</a></li>
+        <li><a href="proyectos.php#gobernacion-cautin">Gobernación de Cautín</a></li>
+        <li><a href="proyectos.php#registro-civil-araucania">Registro Civil – Región de La Araucanía</a></li>
+      </ul>
+    </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    nav.classList.toggle('active');
+  }
+
+  function scrollToJob() {
+    const selector = document.getElementById('jobSelector');
+    const selectedValue = selector.value;
+
+    if (selectedValue) {
+      const targetElement = document.getElementById(selectedValue);
+      if (targetElement) {
+        // Scroll suave hacia el elemento
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start' // Alinea la parte superior del elemento con la parte superior de la ventana
+        });
+      }
+    }
+  }
+</script>
+
+</body>
+</html>

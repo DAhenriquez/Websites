@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="./imagenes/icon.png" type="image/png">
+  <title>V y S Proyecto - Servicios Ofrecidos</title>
+
+  <style>
+    /* Estilos generales (copiados de index.php para mantener la consistencia) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+    }
+
+    .navbar {
+      background: linear-gradient(90deg, #007bff, #00c6ff);
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .navbar .brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background: white;
+      margin: 4px 0;
+      border-radius: 2px;
+    }
+
+    /* Estilos específicos para la página de servicios */
+    .services-section {
+      text-align: center;
+      padding: 3rem 1rem;
+      background-color: #f0f0f0;
+      box-shadow: inset 0 -5px 10px rgba(0,0,0,0.05);
+    }
+
+    .services-section h1 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .services-section p {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    /* Estilos para el select del filtro */
+    .filter-container {
+      text-align: center;
+      padding: 1rem;
+      background-color: #f0f2f5;
+    }
+
+    .filter-container select {
+      padding: 0.8rem 1rem;
+      width: 80%;
+      max-width: 500px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      transition: border-color 0.3s ease;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .filter-container select:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .service-category {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 1000px; /* Ancho máximo para la sección de servicio */
+      display: flex;
+      flex-wrap: wrap; /* Permite que el contenido se ajuste en líneas */
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .service-category.reverse { /* Para alternar el orden de imagen y texto */
+        flex-direction: row-reverse;
+    }
+
+    .service-content {
+      flex: 2; /* Ocupa más espacio que la imagen */
+      min-width: 300px; /* Ancho mínimo para el texto */
+    }
+
+    .service-content h2 {
+      font-size: 2rem;
+      color: #007bff;
+      margin-bottom: 1rem;
+    }
+
+    .service-content p {
+      font-size: 1.1rem;
+      color: #666;
+      line-height: 1.6;
+      text-align: left; /* Alinea el texto a la izquierda */
+    }
+
+    .service-image {
+      flex: 1; /* Ocupa menos espacio */
+      min-width: 250px; /* Ancho mínimo para la imagen */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .service-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    /* Estilos del footer (copiados de index.php para mantener la consistencia) */
+    .footer {
+      background-color: #e0e0e0;
+      color: #333;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-top: 3rem;
+      border-top: 1px solid #ccc;
+    }
+
+    .footer-column {
+      flex: 1;
+      min-width: 200px;
+      max-width: 300px;
+    }
+
+    .footer-column h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #007bff;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-column ul li a {
+      color: #555;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-column ul li a:hover {
+      color: #007bff;
+      text-decoration: underline;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-icons a {
+      color: #333;
+      font-size: 1.8rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: #007bff;
+    }
+
+    /* Ajuste específico para el icono de 'X' (Twitter) */
+    .social-icons a.fa-x-twitter {
+      font-size: 1.6rem;
+    }
+
+    /* Solución para asegurar que los íconos de Font Awesome se muestren */
+    .social-icons a i.fab {
+      font-family: "Font Awesome 6 Brands" !important;
+      font-weight: 400 !important;
+      display: inline-block !important;
+    }
+
+    .social-icons a i.fas {
+      font-family: "Font Awesome 6 Free" !important;
+      font-weight: 900 !important;
+      display: inline-block !important;
+    }
+
+    /* Media Queries para responsividad (copiados de index.php) */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #007bff;
+        flex-direction: column;
+        align-items: center;
+        display: none;
+        z-index: 1000;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .services-section h1 {
+        font-size: 2rem;
+      }
+
+      .services-section p {
+        font-size: 1rem;
+      }
+
+      .filter-container select {
+        width: 90%;
+      }
+
+      .service-category {
+        flex-direction: column; /* Apila el contenido en pantallas pequeñas */
+        align-items: center;
+      }
+
+      .service-category.reverse {
+        flex-direction: column; /* También apila en reverse */
+      }
+
+      .footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer-column {
+        min-width: unset;
+        width: 100%;
+        max-width: unset;
+      }
+
+      .social-icons {
+        justify-content: center;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="brand">
+    <img src="./imagenes/icon.png" alt="Logo" height="40" style="vertical-align: middle; margin-right: 10px;">
+    V y S Proyecto
+  </div>
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="index.php">¿Quiénes somos?</a>
+    <a href="proyectos.php">Proyectos realizados</a>
+    <a href="trabaja.php">Trabaja con nosotros</a>
+  </div>
+</nav>
+
+<section class="services-section">
+  <h1>Servicios Ofrecidos</h1>
+  <p>En V y S Proyecto, ofrecemos una amplia gama de servicios para satisfacer las necesidades de nuestros clientes del sector público y privado.</p>
+</section>
+
+<div class="filter-container">
+    <label for="serviceSelector" class="sr-only">Seleccionar un servicio:</label> <select id="serviceSelector" onchange="scrollToService()">
+        <option value="">Selecciona un servicio...</option>
+        <option value="revestimiento-interior">Revestimiento Interior</option>
+        <option value="revestimiento-exterior">Revestimiento Exterior</option>
+        <option value="acondicionamiento-interior">Acondicionamiento Interior</option>
+        </select>
+</div>
+
+<section id="revestimiento-interior" class="service-category">
+  <div class="service-content">
+    <h2>Revestimiento Interior</h2>
+    <p>Instalación de acabados y materiales decorativos para las superficies internas de techos, paredes y suelos de edificios. Esto incluye la aplicación de pintura, papel tapiz, paneles de madera o PVC, baldosas y otros revestimientos que mejoran la estética, funcionalidad y durabilidad de los espacios interiores. Ponemos especial atención al detalle para lograr ambientes confortables y de alta calidad.</p>
+  </div>
+  <div class="service-image">
+    <img src="./imagenes/revint2.jpg" alt="Revestimiento Interior">
+  </div>
+</section>
+
+<section id="revestimiento-exterior" class="service-category reverse">
+  <div class="service-content">
+    <h2>Revestimiento Exterior</h2>
+    <p>Aplicación de materiales de recubrimiento sobre las superficies exteriores de edificios con el fin de proteger la estructura del edificio frente a agentes atmosféricos, mejorar su aislamiento y/o mejorar su apariencia visual. Se utilizan estucos, revestimientos de vinilo o fibrocemento, ladrillos, entre otros, adaptándose a las necesidades de cada proyecto y asegurando un acabado profesional.</p>
+  </div>
+  <div class="service-image">
+    <img src="./imagenes/revext.jpg" alt="Revestimiento Exterior">
+  </div>
+</section>
+
+<section id="acondicionamiento-interior" class="service-category">
+  <div class="service-content">
+    <h2>Acondicionamiento Interior</h2>
+    <p>Mejoras y optimizaciones de espacios interiores para mejorar su funcionalidad, distribución y confort. Esto puede incluir la remodelación de tabiquería, cielos falsos, mejoras en iluminación, instalación de mobiliario fijo y adaptaciones según los requerimientos del cliente. Es ideal para transformar oficinas, recepciones, áreas educacionales y otras dependencias que requieren ajustes para nuevas necesidades operativas.</p>
+  </div>
+  <div class="service-image">
+    <img src="./imagenes/acoint.jpg" alt="Acondicionamiento Interior">
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="footer-column">
+    <div class="social-icons">
+      <a href="https://www.facebook.com/TU_FACEBOOK" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/TU_INSTAGRAM" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.youtube.com/TU_YOUTUBE" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="https://www.linkedin.com/company/TU_LINKEDIN" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://x.com/TU_X_TWITTER" target="_blank" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+    </div>
+  </div>
+
+  <div class="footer-column">
+    <h3>¿Quiénes somos?</h3>
+    <ul>
+      <li><a href="index.php#misión">Misión</a></li>
+      <li><a href="index.php#visión">Visión</a></li>
+      </ul>
+  </div>
+
+  <div class="footer-column">
+      <h3>Proyectos realizados</h3>
+      <ul>
+        <li><a href="proyectos.php#hospital-pitrufquen">Hospital de Pitrufquén</a></li>
+        <li><a href="proyectos.php#municipalidad-pitrufquen">Municipalidad de Pitrufquén</a></li>
+        <li><a href="proyectos.php#hospital-carahue">Hospital de Carahue</a></li>
+        <li><a href="proyectos.php#hospital-tolten">Hospital de Toltén</a></li>
+        <li><a href="proyectos.php#municipalidad-temuco">Municipalidad de Temuco</a></li>
+        <li><a href="proyectos.php#municipalidad-padre-las-casas">Municipalidad de Padre Las Casas</a></li>
+        <li><a href="proyectos.php#hospital-loncoche">Hospital de Loncoche</a></li>
+        <li><a href="proyectos.php#junaeb-pitrufquen">JUNAEB (Pitrufquén)</a></li>
+        <li><a href="proyectos.php#ejercito-chile">Ejército de Chile</a></li>
+        <li><a href="proyectos.php#gobernacion-cautin">Gobernación de Cautín</a></li>
+        <li><a href="proyectos.php#registro-civil-araucania">Registro Civil – Región de La Araucanía</a></li>
+      </ul>
+    </div>
+
+  <div class="footer-column">
+    <h3>Trabaja con nosotros</h3>
+    <ul>
+      <li><a href="trabaja.php#maestro-carpintero">Maestro Carpintero</a></li>
+      <li><a href="trabaja.php#encargado-obra">Encargado de Obra</a></li>
+      <li><a href="trabaja.php#gasfiter">Gasfíter</a></li>
+      <li><a href="trabaja.php#soldador">Soldador</a></li>
+      <li><a href="trabaja.php#formulario-cv">Formulario de envío de CV</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    nav.classList.toggle('active');
+  }
+
+  function scrollToService() {
+    const selector = document.getElementById('serviceSelector');
+    const selectedValue = selector.value;
+
+    if (selectedValue) {
+      const targetElement = document.getElementById(selectedValue);
+      if (targetElement) {
+        // Scroll suave hacia el elemento
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start' // Alinea la parte superior del elemento con la parte superior de la ventana
+        });
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
